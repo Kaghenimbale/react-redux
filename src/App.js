@@ -2,20 +2,34 @@ import './App.css';
 import CartContainer from './component/CartContainer';
 import Navbar from './component/Navbar';
 import { useSelector, useDispatch } from 'react-redux';
-import { calculateTotals } from './features/cart/CartSlice';
+import { calculateTotals, getCartItems } from './features/cart/CartSlice';
 import { useEffect } from 'react';
 import Modal from './component/Modal';
 
 function App() {
-  const { cartItems } = useSelector((store) => store.cart);
+  const { cartItems, isLoading } = useSelector((store) => store.cart);
+  const { isOpen } = useSelector((store) => store.modal);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems, dispatch]);
+  // useEffect(() => {
+  //   dispatch(calculateTotals());
+  // }, [cartItems, dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getCartItems());
+  // }, [dispatch]);
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="loading">
+  //       <h1>Loading...</h1>
+  //     </div>
+  //   );
+  // }
   return (
     <main>
-      <Modal />
+      {isOpen && <Modal />}
       <Navbar />
       <CartContainer />
     </main>
